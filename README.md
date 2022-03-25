@@ -2,6 +2,7 @@
 ## Projet : reconnaissance d’activité humaine via un smartphone.
 
 
-#Collaborators
+
+Collaborators
 * Howet Marie
 * Libert Charlotte
