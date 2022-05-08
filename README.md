@@ -1,6 +1,5 @@
-# Projet
-## Projet : reconnaissance d’activité humaine via un smartphone.
-
+# Project
+## Machine Learning Project : recognition of human activity via a smartphone.
 
 
 Collaborators
