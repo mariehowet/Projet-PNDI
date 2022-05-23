@@ -23,6 +23,7 @@ struct file {
 	double vAccs[NB_VACCS];
 };
 
+File fillFile(char line[]);
 void initMatrix(double matrix[][NB_VACCS], int  nbLines);
 void matrixForFiModel(double matrixByMvmt[][NB_VACCS], double matrixFiModel[][NB_VACCS]);
 double generalAverage(double matrixByMvmt[][NB_VACCS]);
@@ -34,7 +35,6 @@ void main(void) {
 	FILE* fpFiModel;
 	char line[LINE];
 	File file;
-	char* token;
 	int iVacc;
 	double matrixByMvmt[NB_LINES_MATRIX_BYMVT][NB_VACCS];
 	double matrixFiModel[NB_LINES_MATRIX_FIMODEL][NB_VACCS];
@@ -59,17 +59,7 @@ void main(void) {
 
 			fgets(line, LINE, fpTrain);
 			do {
-				token = strtok(line, ",");
-				file.movement = atoi(token);
-				token = strtok(NULL, ",");
-				token = strtok(NULL, ",");
-				token = strtok(NULL, ",");
-				int i = 0;
-				while (token != NULL && i < NB_VACCS) {
-					file.vAccs[i] = atof(token);
-					token = strtok(NULL, ",");
-					i++;
-				}
+				file = fillFile(line);
 				iVacc = 0;
 				while (iVacc < NB_VACCS && file.vAccs[iVacc] > 0) {
 					matrixByMvmt[0][iVacc] += file.vAccs[iVacc];
@@ -88,6 +78,23 @@ void main(void) {
 	}
 }
 
+File fillFile(char line[]) {
+	File file;
+	char* token;
+	token = strtok(line, ",");
+	file.movement = atoi(token);
+	token = strtok(NULL, ",");
+	token = strtok(NULL, ",");
+	token = strtok(NULL, ",");
+	int i = 0;
+	while (token != NULL && i < NB_VACCS) {
+		file.vAccs[i] = atof(token);
+		token = strtok(NULL, ",");
+		i++;
+	}
+
+	return file;
+}
 
 void initMatrix(double matrix[][NB_VACCS], int  nbLines) {
 	for (int i = 0; i < nbLines; i++) {
@@ -101,7 +108,7 @@ void matrixForFiModel(double matrixByMvmt[][NB_VACCS], double matrixFiModel[][NB
 	int iVacc = 0;
 	while (iVacc < NB_VACCS && matrixByMvmt[0][iVacc] != 0) {
 		matrixFiModel[0][iVacc] = matrixByMvmt[0][iVacc] / matrixByMvmt[2][iVacc];
-		matrixFiModel[1][iVacc] = matrixByMvmt[1][iVacc] / matrixByMvmt[2][iVacc] - pow((matrixFiModel[0][iVacc]), 2);
+		matrixFiModel[1][iVacc] = (matrixByMvmt[1][iVacc] / matrixByMvmt[2][iVacc]) - pow((matrixFiModel[0][iVacc]), 2);
 		iVacc++;
 	}
 }
