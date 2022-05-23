@@ -1,8 +1,14 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include<stdio.h>
 #include<math.h>
+#include<stdlib.h>
+#include<string.h>
 
 #define FILE_TRAIN "trainSet.csv"
-#define FILE_FIMODEL "fiModel.csv"
+#define FILE_FIMODEL "fiModel1.csv"
 #define LINE 10000
 #define NB_VACCS 600
 #define NB_MOVEMENTS 6
@@ -16,6 +22,71 @@ struct file {
 	int index;
 	double vAccs[NB_VACCS];
 };
+
+void initMatrix(double matrix[][NB_VACCS], int  nbLines);
+void matrixForFiModel(double matrixByMvmt[][NB_VACCS], double matrixFiModel[][NB_VACCS]);
+double generalAverage(double matrixByMvmt[][NB_VACCS]);
+void writing(FILE* fpFiModel, int iLine, double matrix[][NB_VACCS]);
+void writingInFiModel(FILE* fpFiModel, int iMovement, double matrixFiModel[][NB_VACCS], double generalAverage);
+
+void main(void) {
+	FILE* fpTrain;
+	FILE* fpFiModel;
+	char line[LINE];
+	File file;
+	char* token;
+	int iVacc;
+	double matrixByMvmt[NB_LINES_MATRIX_BYMVT][NB_VACCS];
+	double matrixFiModel[NB_LINES_MATRIX_FIMODEL][NB_VACCS];
+	double generalAvg;
+
+	fopen_s(&fpTrain, FILE_TRAIN, "r");
+	fopen_s(&fpFiModel, FILE_FIMODEL, "w");
+
+	if (fpTrain == NULL || fpFiModel == NULL)
+		puts("error opening trainSet or fiModel");
+	else {
+
+		fprintf(fpFiModel, "%s", "mouvement");
+		for (int i = 0; i < NB_VACCS; i++)
+			fprintf(fpFiModel, ", %s %d", "vAcc", i + 1);
+		fprintf(fpFiModel, "\n");
+
+		fgets(line, LINE, fpTrain);
+		int iMvt = 1;
+		while (!feof(fpTrain) && iMvt <= NB_MOVEMENTS) {
+			initMatrix(matrixByMvmt, NB_LINES_MATRIX_BYMVT);
+
+			fgets(line, LINE, fpTrain);
+			do {
+				token = strtok(line, ",");
+				file.movement = atoi(token);
+				token = strtok(NULL, ",");
+				token = strtok(NULL, ",");
+				token = strtok(NULL, ",");
+				int i = 0;
+				while (token != NULL && i < NB_VACCS) {
+					file.vAccs[i] = atof(token);
+					token = strtok(NULL, ",");
+					i++;
+				}
+				iVacc = 0;
+				while (iVacc < NB_VACCS && file.vAccs[iVacc] > 0) {
+					matrixByMvmt[0][iVacc] += file.vAccs[iVacc];
+					matrixByMvmt[1][iVacc] += pow(file.vAccs[iVacc], 2);
+					matrixByMvmt[2][iVacc]++;
+					iVacc++;
+				}
+			} while (fgets(line, LINE, fpTrain) != NULL && file.movement == iMvt);
+			matrixForFiModel(matrixByMvmt, matrixFiModel);
+			generalAvg = generalAverage(matrixByMvmt);
+			writingInFiModel(fpFiModel, iMvt, matrixFiModel, generalAvg);
+			iMvt++;
+		}
+		fclose(fpFiModel);
+		fclose(fpTrain);
+	}
+}
 
 
 void initMatrix(double matrix[][NB_VACCS], int  nbLines) {
@@ -66,64 +137,3 @@ void writingInFiModel(FILE* fpFiModel, int iMovement, double matrixFiModel[][NB_
 }
 
 
-void main(void) {
-	FILE* fpTrain;
-	FILE* fpFiModel;
-	char line[LINE];
-	File file;
-	char* token;
-	int iVacc;
-	double matrixByMvmt[NB_LINES_MATRIX_BYMVT][NB_VACCS];
-	double matrixFiModel[NB_LINES_MATRIX_FIMODEL][NB_VACCS];
-	double generalAvg;
-
-	fopen_s(&fpTrain, FILE_TRAIN, "r");
-	fopen_s(&fpFiModel, FILE_FIMODEL, "w");
-
-	if (fpTrain == NULL || fpFiModel == NULL)
-		puts("error opening trainSet or fiModel");
-	else {
-		// Writing headers
-		fprintf(fpFiModel, "%s", "mouvement");
-		for (int i = 0; i < NB_VACCS; i++)
-			fprintf(fpFiModel, ", %s %d", "vAcc", i + 1);
-		fprintf(fpFiModel, "\n");
-
-
-		fgets(line, LINE, fpTrain); // reading header
-		int iMvt = 1;
-		while (iMvt <= NB_MOVEMENTS) {
-			initMatrix(matrixByMvmt, NB_LINES_MATRIX_BYMVT);
-		
-			fgets(line, LINE, fpTrain);
-			do {
-				// reading data
-				token = strtok(line, ",");
-				file.movement = atoi(token);
-				token = strtok(NULL, ",");
-				token = strtok(NULL, ",");
-
-				token = strtok(NULL, ",");
-				int i = 0;
-				while (token != NULL && i < NB_VACCS) {
-					file.vAccs[i] = atof(token);
-					token = strtok(NULL, ",");
-					i++;
-				}
-				iVacc = 0;
-				while (iVacc < NB_VACCS && file.vAccs[iVacc] > 0) {
-					matrixByMvmt[0][iVacc] += file.vAccs[iVacc];// sum for averages
-					matrixByMvmt[1][iVacc] += pow(file.vAccs[iVacc], 2); // sum for standard deviation
-					matrixByMvmt[2][iVacc]++; // number of occurences by Vacc
-					iVacc++;
-				}
-			} while (fgets(line, LINE, fpTrain) != NULL && file.movement == iMvt);
-			matrixForFiModel(matrixByMvmt, matrixFiModel);
-			generalAvg = generalAverage(matrixByMvmt);
-			writingInFiModel(fpFiModel, iMvt, matrixFiModel, generalAvg);
-			iMvt++;
-		}
-		fclose(fpFiModel);
-		fclose(fpTrain);
-	}
-}
