@@ -59,7 +59,8 @@ void createConfusionMatrix(int realClasses[], int estimatedClasses[], int confus
 	for (int iTest = 0; iTest < NB_TESTS; iTest++) {
 		int i = indexResearch(estimatedClasses,iTest);
 		int j = indexResearch(realClasses, iTest);
-		confusionMatrix[i - 1][j - 1]++;
+		if(i <= NB_CLASSES)
+		   confusionMatrix[i - 1][j - 1]++;
 	}
 }
 
