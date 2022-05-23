@@ -3,11 +3,6 @@
 #include <stdbool.h>
 #include < stdlib.h>
 
-void displayResultsByClass(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES]);
-void displayAccuracy(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES]);
-void displayConfusionMatrix(int confusionMatrix[][NB_CLASSES]);
-void createConfusionMatrix(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES]);
-
 void main(void) {
 	int realClasses[] = { 5, 2, 5, 3, 1, 3, 2, 4};
 	int estimatedClasses[] = { 5, 5, 1, 2, 1, 3, 2, 4};
