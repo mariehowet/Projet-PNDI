@@ -85,7 +85,7 @@ void main(void) {
                     for (int iVacc = 0; iVacc < NB_VACCS; iVacc++) {
                         sumGlobalAvg += testLine.vAccs[iVacc];
                         distancesAvgs[iMovement] += pow(testLine.vAccs[iVacc] - model[iMovement].averages[iVacc], 2);
-                        lineStd = sqrt(pow(testLine.vAccs[iVacc] - model[iMovement].averages[iVacc], 2)); //(xi - moyenne)²( / 1)
+                        lineStd = sqrt(pow(testLine.vAccs[iVacc] - model[iMovement].averages[iVacc], 2)); //(xi - moyenne)Â²( / 1)
                         distancesStds[iMovement] += pow(lineStd - model[iMovement].stds[iVacc], 2);
                         totVaccs++;
                     
@@ -102,7 +102,6 @@ void main(void) {
                 indicateur3 = compareGlobalAvg(sumGlobalAvg, totVaccs, model);
                 estimatedClasses[iClass] = estimatedClass(indicateur1, indicateur2, indicateur3);
                 realClasses[iClass] = testLine.movement;
-               printf("%d) real = %d, i1 =%d, i2=%d, i3=%d,estimated = %d\n",iClass + 1, realClasses[iClass], indicateur1, indicateur2, indicateur3, estimatedClasses[iClass]);
                 iClass++;
                
             }
