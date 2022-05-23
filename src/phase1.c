@@ -32,7 +32,7 @@ struct file {
 	double	gravityy;
 	double	gravityz;
 	double	rotationRatex;
-	double rotationRatey;
+	double  rotationRatey;
 	double	rotationRatez;
 	double	userAccelerationx;
 	double	userAccelerationy;
@@ -63,6 +63,7 @@ void main(void) {
 
 	fopen_s(&fpTrain, FILE_TRAIN, "w");
 	fopen_s(&fpTest, FILE_TEST, "w");
+	
 	if (fpTrain == NULL || fpTest == NULL)
 		puts("error opening trainSet or testSet");
 	else {
