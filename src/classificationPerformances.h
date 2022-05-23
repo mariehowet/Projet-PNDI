@@ -48,7 +48,7 @@ void displayConfusionMatrix(int confusionMatrix[][NB_CLASSES]) {
 	}
 }
 
-int indexResearch(int array[], int iTest) {
+int indexSearch(int array[], int iTest) {
 	int i = 1;
 	while (i <= NB_CLASSES && i != array[iTest])
 		i++;
