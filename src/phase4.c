@@ -88,7 +88,6 @@ void main(void) {
                         lineStd = sqrt(pow(testLine.vAccs[iVacc] - model[iMovement].averages[iVacc], 2)); //(xi - moyenne)²( / 1)
                         distancesStds[iMovement] += pow(lineStd - model[iMovement].stds[iVacc], 2);
                         totVaccs++;
-                    
                     }
                 }
 
