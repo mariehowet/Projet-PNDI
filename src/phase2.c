@@ -1,7 +1,4 @@
 #include "classificationPerformances.h"
-#include <stdio.h> 
-#include <stdbool.h>
-#include <stdlib.h>
 
 void main(void) {
 	int realClasses[] = { 5, 2, 5, 3, 1, 3, 2, 4};
