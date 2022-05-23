@@ -13,11 +13,11 @@ void displayResultsByClass(int realClasses[], int estimatedClasses[], int confus
 	for (int iColumn = 0; iColumn < NB_CLASSES; iColumn++) {
 		sum = 0;
 		for (int iLine = 0; iLine < NB_CLASSES; iLine++)
-			sum += confusionMatrix[iLine][iColumn];
+		     sum += confusionMatrix[iLine][iColumn];
 		if (sum == 0)
-		percent = 0;
-			else 
-		percent = ((double)confusionMatrix[iColumn][iColumn] / sum) * 100;
+		   percent = 0;
+	        else 
+		    percent = ((double)confusionMatrix[iColumn][iColumn] / sum) * 100;
 		printf("%d\t\t%d\t%d\t%.2f%%\n", iColumn + 1, confusionMatrix[iColumn][iColumn], sum, percent);
 	}
 }
@@ -48,16 +48,18 @@ void displayConfusionMatrix(int confusionMatrix[][NB_CLASSES]) {
 	}
 }
 
+int indexResearch(int array[], int iTest) {
+	int i = 1;
+	while (i <= NB_CLASSES && i != array[iTest])
+		i++;
+	return i;
+}
+
 void createConfusionMatrix(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES]) {
 	for (int iTest = 0; iTest < NB_TESTS; iTest++) {
-		int i = 1;
-		while (i <= NB_CLASSES && i != estimatedClasses[iTest])
-			i++;
-		int j = 1;
-		while (j <= NB_CLASSES && j != realClasses[iTest])
-			j++;
-		if (i <= NB_CLASSES)
-			confusionMatrix[i - 1][j - 1]++;
+		int i = indexResearch(estimatedClasses,iTest);
+		int j = indexResearch(realClasses, iTest);
+		confusionMatrix[i - 1][j - 1]++;
 	}
 }
 
