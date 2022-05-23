@@ -17,7 +17,7 @@ void displayResultsByClass(int realClasses[], int estimatedClasses[], int confus
 		if (sum == 0)
 		   percent = 0;
 	        else 
-		    percent = ((double)confusionMatrix[iColumn][iColumn] / sum) * 100;
+		    percent = (double)confusionMatrix[iColumn][iColumn] / sum * 100;
 		printf("%d\t\t%d\t%d\t%.2f%%\n", iColumn + 1, confusionMatrix[iColumn][iColumn], sum, percent);
 	}
 }
