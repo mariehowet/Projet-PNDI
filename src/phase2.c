@@ -5,7 +5,7 @@ void main(void) {
 	int estimatedClasses[] = { 5, 5, 1, 2, 1, 3, 2, 4};
 	int confusionMatrix[NB_CLASSES][NB_CLASSES] = { 0 };
 	createConfusionMatrix(realClasses, estimatedClasses, confusionMatrix);
-	displayResultsByClass(realClasses, estimatedClasses, confusionMatrix);
+	displayResultsByClass(confusionMatrix);
 	displayAccuracy(confusionMatrix);
 	displayConfusionMatrix(confusionMatrix);
 }
