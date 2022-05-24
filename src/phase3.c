@@ -8,7 +8,7 @@
 #include<string.h>
 
 #define FILE_TRAIN "trainSet.csv"
-#define FILE_FIMODEL "fiModel1.csv"
+#define FILE_FIMODEL "fiModel.csv"
 #define LINE 10000
 #define NB_VACCS 600
 #define NB_MOVEMENTS 6
