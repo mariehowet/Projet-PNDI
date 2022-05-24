@@ -18,8 +18,6 @@
 typedef struct file File;
 struct file {
 	int movement;
-	int gender;
-	int index;
 	double vAccs[NB_VACCS];
 };
 
