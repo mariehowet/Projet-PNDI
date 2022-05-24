@@ -6,7 +6,7 @@
 #define NB_TESTS 30
 #define NB_CLASSES 6
 
-void displayResultsByClass(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES]) {
+void displayResultsByClass(int confusionMatrix[][NB_CLASSES]) {
 	printf("Classes\tBien classes\tTotal\tPourcentage\n");
 	int sum;
 	double percent;
