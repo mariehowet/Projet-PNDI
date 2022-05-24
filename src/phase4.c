@@ -109,6 +109,7 @@ void main(void) {
             fclose(fpTest);
 
             createConfusionMatrix(realClasses, estimatedClasses, confusionMatrix);
+            printf("Legende \n %d : downstairs, %d : jogging, %d : sitting, %d : standing, %d : upstairs, %d : walking \n",1,2,3,4,5,6);
             displayResultsByClass(realClasses, estimatedClasses, confusionMatrix);
             displayAccuracy(confusionMatrix);
             displayConfusionMatrix(confusionMatrix);
