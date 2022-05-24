@@ -108,7 +108,7 @@ void main(void) {
         fclose(fpFiModel);
         fclose(fpTest);
 
-        createConfusionMatrix(realClasses, estimatedClasses, confusionMatrix);
+        createConfusionMatrix(realClasses, estimatedClasses, confusionMatrix, NB_LINES_FISET);
         printf("Legende \n %d : downstairs, %d : jogging, %d : sitting, %d : standing, %d : upstairs, %d : walking \n", 1, 2, 3, 4, 5, 6);
         displayResultsByClass(confusionMatrix);
         displayAccuracy(confusionMatrix);
