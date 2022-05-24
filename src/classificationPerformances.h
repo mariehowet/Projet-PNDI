@@ -3,7 +3,6 @@
 #include <stdio.h> 
 #include <stdbool.h>
 #include <stdlib.h>
-#define NB_TESTS 30
 #define NB_CLASSES 6
 
 void displayResultsByClass(int confusionMatrix[][NB_CLASSES]) {
@@ -55,12 +54,16 @@ int indexSearch(int array[], int iTest) {
 	return i;
 }
 
-void createConfusionMatrix(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES]) {
-	for (int iTest = 0; iTest < NB_TESTS; iTest++) {
-		int i = indexSearch(estimatedClasses,iTest);
-		int j = indexSearch(realClasses, iTest);
-		if(i <= NB_CLASSES)
-		   confusionMatrix[i - 1][j - 1]++;
+void createConfusionMatrix(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES], int nbTests) {
+	for (int iTest = 0; iTest < nbTests; iTest++) {
+		int i = 1;
+		while (i <= NB_CLASSES && i != estimatedClasses[iTest])
+			i++;
+		int j = 1;
+		while (j <= NB_CLASSES && j != realClasses[iTest])
+			j++;
+		if (i <= NB_CLASSES)
+			confusionMatrix[i - 1][j - 1]++;
 	}
 }
 
