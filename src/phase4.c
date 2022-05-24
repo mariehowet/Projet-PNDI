@@ -9,7 +9,7 @@
 #include "classificationPerformances.h"
 
 
-#define FILE_TEST "testset.csv"
+#define FILE_TEST "testSet.csv"
 #define FILE_FIMODEL "fiModel.csv"
 #define LINE 10000
 #define NB_VACCS 600
