@@ -21,8 +21,6 @@
 typedef struct testLine TestLine;
 struct testLine {
     int movement;
-    int gender;
-    int index;
     double vAccs[NB_VACCS];
 };
 
