@@ -56,12 +56,8 @@ int indexSearch(int array[], int iTest) {
 
 void createConfusionMatrix(int realClasses[], int estimatedClasses[], int confusionMatrix[][NB_CLASSES], int nbTests) {
 	for (int iTest = 0; iTest < nbTests; iTest++) {
-		int i = 1;
-		while (i <= NB_CLASSES && i != estimatedClasses[iTest])
-			i++;
-		int j = 1;
-		while (j <= NB_CLASSES && j != realClasses[iTest])
-			j++;
+		int i = indexSearch(estimatedClasses, iTest)
+		int j = indexSearch(realClasses, iTest);
 		if (i <= NB_CLASSES)
 			confusionMatrix[i - 1][j - 1]++;
 	}
